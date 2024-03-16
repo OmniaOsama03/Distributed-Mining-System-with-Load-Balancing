@@ -7,5 +7,7 @@ public class Main
         System.out.println("hello");
         System.out.println("wow new message");
 
+        System.out.println("Omnia");
+
     }
 }
