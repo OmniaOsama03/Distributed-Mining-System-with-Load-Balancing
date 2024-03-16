@@ -4,7 +4,12 @@ public class Main
     {
         System.out.println("I hope it works this time lol");
         System.out.println("Welllll.....CONGRATSSS!!!");
+
         System.out.println("Trail Message");
+
+
+        System.out.println("hello");
+        System.out.println("wow new message");
 
 
     }
