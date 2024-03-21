@@ -1,27 +1,30 @@
+package TEST;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
 
-public class Block {
+public class Block_2
+{
     private int blockNumber;
     private long nonce;
     private String data;
     private String hash;
-    int leadingZeros = 0;
+    private int leadingZeros;
+    private long executionTime; // Variable for execution time
 
-    public Block(int blockNumber, String data, int leadingZeros) {
+    public Block_2(int blockNumber, String data, int leadingZeros) {
         this.blockNumber = blockNumber;
         this.data = data;
         this.nonce = 0; // Initial nonce value
         this.hash = "";
         this.leadingZeros = leadingZeros;
+
     }
 
     public int getBlockNumber() {
         return blockNumber;
     }
     public int getLeadingZeros(){return leadingZeros;}
-
     public long getNonce() {
         return nonce;
     }
@@ -33,6 +36,8 @@ public class Block {
     public String getHash() {
         return hash;
     }
+    public long getExecutionTime() {return executionTime;}
+
 
     // Generate SHA-256 hash of a string
     private String calculateHash(String input) {
@@ -58,6 +63,8 @@ public class Block {
 
     // Mine the block to find a hash with a specified number of leading zeros
     public void generateHashWithLeadingZeros(int leadingZeros) {
+        // Start the timer
+        long startTime = System.nanoTime();
 
         String prefix = "0".repeat(leadingZeros);
         do {
@@ -65,25 +72,12 @@ public class Block {
             String dataWithNonce = blockNumber + data + nonce;
             hash = calculateHash(dataWithNonce);
         } while (!hash.startsWith(prefix)); // Continue until hash has the required number of leading zeros
-    }
 
-    public static void main(String[] args) {
+        // Stop the timer
+        long endTime = System.nanoTime();
 
-        int blockNumber = 1;
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("Enter your data: ");
-        String data = input.nextLine();
-
-        System.out.println("Enter count of leading zeros: ");
-        int leadingZeros = input.nextInt();
-
-        Block block = new Block(blockNumber, data, leadingZeros);
-        block.generateHashWithLeadingZeros(leadingZeros);
-
-        System.out.println("Block Number: " + block.getBlockNumber());
-        System.out.println("Data: " + block.getData());
-        System.out.println("Nonce: " + block.getNonce());
-        System.out.println("Hash with " + leadingZeros + " leading zeros: " + block.getHash());
+        // Calculate elapsed time in milliseconds and assign it to executionTime
+        executionTime = (endTime - startTime) / 1000000;
     }
 }
+
