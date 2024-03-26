@@ -9,8 +9,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class Client_1 {
+public class Client_2 {
     public static void main(String[] args) {
+
 
         DatagramSocket aSocket = null;
         try {
@@ -21,7 +22,6 @@ public class Client_1 {
             int blockNumber = Integer.parseInt(args[1]);
             String data = args[2];
             int leadingZeros = Integer.parseInt(args[3]);
-
 
             //P.S Since ours applies one block at a time, we could remove the array below and directly use getJson(block)
             Block_2[] Blocks = new Block_2[]
@@ -65,3 +65,4 @@ public class Client_1 {
         return new GsonBuilder().setPrettyPrinting().create().toJson(o);
     }
 }
+

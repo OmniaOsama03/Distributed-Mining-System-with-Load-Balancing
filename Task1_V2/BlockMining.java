@@ -1,62 +1,85 @@
 package Task1_V2;
 
-import Task1_V2.StringUtil;
 import com.google.gson.Gson;
 
-public class BlockMining {
-    private int number; // The block number
-    private int nonce; // Nonce value used in mining
-    private String data; // Data stored in the block
-    private int leadingZeros; // Number of leading zeros required in the block's hash
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-    // Constructor to initialize the Block object with provided values
-    public BlockMining(int number, int nonce, String data, int leadingZeros) {
-        this.number = number;
-        this.nonce = nonce;
+public class BlockMining
+{
+    private int blockNumber;
+    private long nonce;
+    private String data;
+    private String hash;
+    private int leadingZeros;
+    private long executionTime; // Variable for execution time
+
+    public BlockMining(int blockNumber, String data, int leadingZeros) {
+        this.blockNumber = blockNumber;
         this.data = data;
+        this.nonce = 0; // Initial nonce value
+        this.hash = "";
         this.leadingZeros = leadingZeros;
+
     }
 
-    // Method to increment the nonce value
-    public void incrementNonce() {
-        nonce++;
+    public int getBlockNumber() {
+        return blockNumber;
+    }
+    public int getLeadingZeros(){return leadingZeros;}
+    public long getNonce() {
+        return nonce;
     }
 
-    // Getter method for the block number
-    public int getNumber() {
-        return number;
-    }
-
-    // Getter method for the data stored in the block
     public String getData() {
         return data;
     }
 
-    // Getter method for the nonce value
-    public int getNonce() {
-        return nonce;
+    public String getHash() {
+        return hash;
+    }
+    public long getExecutionTime() {return executionTime;}
+
+
+    // Generate SHA-256 hash of a string
+    private String calculateHash(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes());
+
+            // Convert byte array to hexadecimal string
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    // Method to calculate the hash of the block using SHA-256 hash function
-    public String calculateHash() {
-        return StringUtil.applySha256(number + nonce + data);
-    }
+    // Mine the block to find a hash with a specified number of leading zeros
+    public void generateHash(int leadingZeros) {
+        // Start the timer
+        long startTime = System.nanoTime();
 
-    // Getter method for the number of leading zeros required in the block's hash
-    public int getLeadingZeros() {
-        return leadingZeros;
-    }
+        String prefix = "0".repeat(leadingZeros);
+        do {
+            nonce++; // Increment nonce value
+            String dataWithNonce = blockNumber + data + nonce;
+            hash = calculateHash(dataWithNonce);
+        } while (!hash.startsWith(prefix)); // Continue until hash has the required number of leading zeros
 
-    // Method to convert the Block object to JSON format
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+        // Stop the timer
+        long endTime = System.nanoTime();
 
-    // Method to create a Block object from JSON format
-    public static BlockMining fromJson(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, BlockMining.class);
+        // Calculate elapsed time in milliseconds and assign it to executionTime
+        executionTime = (endTime - startTime) / 1000000;
     }
-
 }
+
