@@ -1,9 +1,12 @@
-package TEST;
+package Task2_V0;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Block_2
+//Maryam Mohammed Ali 1079679
+//Omnia Osama Ahmed 1084505
+//Nourhan Ahmed Elmehalawy 1078096
+public class BlockMining_3_77
 {
     private int blockNumber;
     private long nonce;
@@ -12,7 +15,7 @@ public class Block_2
     private int leadingZeros;
     private long executionTime; // Variable for execution time
 
-    public Block_2(int blockNumber, String data, int leadingZeros) {
+    public BlockMining_3_77(int blockNumber, String data, int leadingZeros) {
         this.blockNumber = blockNumber;
         this.data = data;
         this.nonce = 0; // Initial nonce value

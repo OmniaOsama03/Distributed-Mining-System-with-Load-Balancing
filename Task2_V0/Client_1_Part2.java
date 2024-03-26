@@ -1,15 +1,19 @@
-package TEST;
+package Task2_V0;
+
+import TEST.Block_2;
 import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Scanner;
 
-public class Client_2 {
+//Maryam Mohammed Ali 1079679
+// Omnia Osama Ahmed 1084505
+//Nourhan Ahmed Elmehalawy 1078096
+public class Client_1_Part2 {
     public static void main(String[] args) {
-
 
         DatagramSocket aSocket = null;
         try {
@@ -20,6 +24,7 @@ public class Client_2 {
             int blockNumber = Integer.parseInt(args[1]);
             String data = args[2];
             int leadingZeros = Integer.parseInt(args[3]);
+
 
             //P.S Since ours applies one block at a time, we could remove the array below and directly use getJson(block)
             Block_2[] Blocks = new Block_2[]
@@ -63,4 +68,3 @@ public class Client_2 {
         return new GsonBuilder().setPrettyPrinting().create().toJson(o);
     }
 }
-

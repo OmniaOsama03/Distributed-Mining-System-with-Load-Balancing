@@ -1,18 +1,20 @@
-package TEST;
+package Task2_V0;
 
 import com.google.gson.GsonBuilder;
-import java.security.*;
+
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Scanner;
+import java.util.HashMap;
 
-public class Server {
-    public Server() {
-    }
+//Maryam Mohammed Ali 1079679
+// Omnia Osama Ahmed 1084505
+//Nourhan Ahmed Elmehalawy 1078096
+public class Server_Part2 {
+    // HashMap to store connected clients with their IP addresses and ports
+    private static HashMap<String, InetAddress> connectedClients = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -28,7 +30,16 @@ public class Server {
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 aSocket.receive(request);
 
-                Block_2 block = (Block_2) getObject(new String(request.getData(), 0, request.getLength()));
+                String clientID = request.getAddress().toString();
+
+                // Checking if the client is a new connection and adding it to the connectedClients HashMap
+                if (!connectedClients.containsKey(clientID)) {
+                    connectedClients.put(clientID, request.getAddress());
+                    System.out.println("connected client: " + clientID);
+                }
+
+
+                BlockMining_3_77 block = (BlockMining_3_77) getObject(new String(request.getData(), 0, request.getLength()));
 
                 block.generateHash(block.getLeadingZeros());
 
@@ -37,6 +48,7 @@ public class Server {
                         "\nNonce: " + block.getNonce() +
                         "\nHash with " + block.getLeadingZeros() + " leading zeros: " + block.getHash() +
                         "\n\n EXECUTION TIME: " + block.getExecutionTime() + " ms";
+
 
                 DatagramPacket reply = new DatagramPacket(blockInfo.getBytes(),blockInfo.length(),request.getAddress(),request.getPort());
                 aSocket.send(reply);
@@ -55,6 +67,6 @@ public class Server {
     }
 
     public static Object getObject(String JsgString) {
-        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, Block_2.class);
+        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
     }
 }
