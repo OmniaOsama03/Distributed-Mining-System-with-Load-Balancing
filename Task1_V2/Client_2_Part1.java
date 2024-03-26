@@ -9,7 +9,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class Client_2 {
+//Maryam Mohammed Ali 1079679
+// Omnia Osama Ahmed 1084505
+//Nourhan Ahmed Elmehalawy 1078096
+public class Client_2_Part1 {
     public static void main(String[] args) {
 
 

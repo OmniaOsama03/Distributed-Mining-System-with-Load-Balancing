@@ -9,7 +9,10 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.HashMap;
 
-public class Server {
+//Maryam Mohammed Ali 1079679
+// Omnia Osama Ahmed 1084505
+//Nourhan Ahmed Elmehalawy 1078096
+public class Server_Part1 {
     // HashMap to store connected clients with their IP addresses and ports
     private static HashMap<String, InetAddress> connectedClients = new HashMap<>();
 
@@ -36,7 +39,7 @@ public class Server {
                 }
 
 
-                BlockMining block = (BlockMining) getObject(new String(request.getData(), 0, request.getLength()));
+                BlockMining_3_77 block = (BlockMining_3_77) getObject(new String(request.getData(), 0, request.getLength()));
 
                 block.generateHash(block.getLeadingZeros());
 
@@ -64,6 +67,6 @@ public class Server {
     }
 
     public static Object getObject(String JsgString) {
-        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining.class);
+        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
     }
 }
