@@ -10,25 +10,16 @@ import java.util.Scanner;
 public class Client_2 {
     public static void main(String[] args) {
 
-        Scanner input = new Scanner(System.in);
 
         DatagramSocket aSocket = null;
         try {
             aSocket = new DatagramSocket();
-            InetAddress aHost = InetAddress.getByName("172.17.17.111");
+            InetAddress aHost = InetAddress.getByName(args[0]);
             int serverPort = 20000;
 
-            System.out.print("Enter the block number: ");
-            int blockNumber = input.nextInt();
-            input.nextLine();
-
-            System.out.print("Enter the data in the block: ");
-            String data = input.nextLine();
-
-
-            System.out.print("Enter the number of leading zeros: ");
-            int leadingZeros = input.nextInt();
-            input.nextLine();
+            int blockNumber = Integer.parseInt(args[1]);
+            String data = args[2];
+            int leadingZeros = Integer.parseInt(args[3]);
 
             //P.S Since ours applies one block at a time, we could remove the array below and directly use getJson(block)
             Block_2[] Blocks = new Block_2[]

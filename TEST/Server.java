@@ -30,7 +30,7 @@ public class Server {
 
                 Block_2 block = (Block_2) getObject(new String(request.getData(), 0, request.getLength()));
 
-                block.generateHashWithLeadingZeros(block.getLeadingZeros());
+                block.generateHash(block.getLeadingZeros());
 
                 String blockInfo = "\nBlock Number: " + block.getBlockNumber() +
                         "\nData: " + block.getData() +

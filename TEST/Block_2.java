@@ -62,7 +62,7 @@ public class Block_2
     }
 
     // Mine the block to find a hash with a specified number of leading zeros
-    public void generateHashWithLeadingZeros(int leadingZeros) {
+    public void generateHash(int leadingZeros) {
         // Start the timer
         long startTime = System.nanoTime();
 
