@@ -5,11 +5,13 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.HashMap;
 
 public class Server {
-    public Server() {
-    }
+    // HashMap to store connected clients with their IP addresses and ports
+    private static HashMap<String, InetAddress> connectedClients = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -25,6 +27,15 @@ public class Server {
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 aSocket.receive(request);
 
+                String clientID = request.getAddress().toString();
+
+                // Checking if the client is a new connection and adding it to the connectedClients HashMap
+                if (!connectedClients.containsKey(clientID)) {
+                    connectedClients.put(clientID, request.getAddress());
+                    System.out.println("connected client: " + clientID);
+                }
+
+
                 BlockMining block = (BlockMining) getObject(new String(request.getData(), 0, request.getLength()));
 
                 block.generateHash(block.getLeadingZeros());
@@ -34,6 +45,7 @@ public class Server {
                         "\nNonce: " + block.getNonce() +
                         "\nHash with " + block.getLeadingZeros() + " leading zeros: " + block.getHash() +
                         "\n\n EXECUTION TIME: " + block.getExecutionTime() + " ms";
+
 
                 DatagramPacket reply = new DatagramPacket(blockInfo.getBytes(),blockInfo.length(),request.getAddress(),request.getPort());
                 aSocket.send(reply);
