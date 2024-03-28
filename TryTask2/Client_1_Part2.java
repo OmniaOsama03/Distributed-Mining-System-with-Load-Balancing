@@ -1,4 +1,4 @@
-package Task1_V2;
+package TryTask2;
 
 import com.google.gson.GsonBuilder;
 
@@ -11,7 +11,7 @@ import java.net.SocketException;
 //Maryam Mohammed Ali 1079679
 // Omnia Osama Ahmed 1084505
 //Nourhan Ahmed Elmehalawy 1078096
-public class Client_1_Part1 {
+public class Client_1_Part2 {
     public static void main(String[] args) {
 
         DatagramSocket aSocket = null;
