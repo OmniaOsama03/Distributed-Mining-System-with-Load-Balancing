@@ -1,4 +1,5 @@
 package Task2_V0;
+import com.google.gson.GsonBuilder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -65,22 +66,25 @@ public class BlockMining_3_77
     }
 
     // Mine the block to find a hash with a specified number of leading zeros
-    public void generateHash(int leadingZeros) {
-        // Start the timer
+    public void generateHash(int leadingZeros, long startNonce, long endNonce) {
+// Start the timer
         long startTime = System.nanoTime();
-
         String prefix = "0".repeat(leadingZeros);
-        do {
-            nonce++; // Increment nonce value
+        for (nonce = startNonce; nonce <= endNonce; nonce++) {
             String dataWithNonce = blockNumber + data + nonce;
             hash = calculateHash(dataWithNonce);
-        } while (!hash.startsWith(prefix)); // Continue until hash has the required number of leading zeros
-
-        // Stop the timer
+            if (hash.startsWith(prefix)) {
+                break; // Stop iterating if valid hash is found
+            }
+        }
+// Stop the timer
         long endTime = System.nanoTime();
-
-        // Calculate elapsed time in milliseconds and assign it to executionTime
+// Calculate elapsed time in milliseconds and assign it to executionTime
         executionTime = (endTime - startTime) / 1000000;
+    }
+
+    public static Object getObject(String JsgString) {
+        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, TryTask2.BlockMining_3_77.class);
     }
 }
 
