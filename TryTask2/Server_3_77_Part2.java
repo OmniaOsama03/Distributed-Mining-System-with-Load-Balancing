@@ -51,7 +51,7 @@ class Server_3_77_Part2 implements Runnable {
                 }
 
 
-                BlockMining_3_77 block = (BlockMining_3_77) getObject(new String(request.getData(), 0, request.getLength()));
+                BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
 
 
                 String blockInfo = "\nBlock Number: " + block.getBlockNumber() +
@@ -77,9 +77,7 @@ class Server_3_77_Part2 implements Runnable {
         }
     }
 
-   // public static Object getObject(String JsgString) {
-//        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
-   // }
+
     @Override
     public void run() {
 // Mining logic goes here

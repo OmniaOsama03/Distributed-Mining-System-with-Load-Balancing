@@ -83,6 +83,7 @@ public class BlockMining_3_77
 // Calculate elapsed time in milliseconds and assign it to executionTime
         executionTime = (endTime - startTime) / 1000000;
     }
+
     public static Object getObject(String JsgString) {
         return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
     }

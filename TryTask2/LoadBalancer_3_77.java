@@ -9,7 +9,6 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static TryTask2.Server_3_77_Part2.getObject;
 
 public class LoadBalancer_3_77 {
 
@@ -37,19 +36,22 @@ public class LoadBalancer_3_77 {
 
                 InetAddress clientAddress =  request.getAddress();
                 int clientPort = request.getPort();
-               BlockMining_3_77 block = (BlockMining_3_77) getObject(new String(request.getData(), 0, request.getLength()));
+                BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
 
 
                 // Determine which server to forward the request
                 int serverIndex = (int) (nonceMin + ((range / numServers) * (request.getData()[0] & 0xFF)) / 256); // Distribute evenly
                 String serverAddress = "localhost"; // Assuming servers are on localhost
                 int serverPort = 30000 + serverIndex; // Adjust port range as needed
+
                 // Creating Servers Instances
                 List<Server_3_77_Part2> serverThreads = new ArrayList<>();
-                for (int i = 0; i < numServers; i++) {
+                for (int i = 0; i < numServers; i++)
+                {
                     long startNonce = nonceMax / numServers * i;
                     long endNonce = nonceMin / numServers * (i + 1);
-                    Server_3_77_Part2 serverThread = new Server_3_77_Part2(startNonce, endNonce);
+
+                    Server_3_77_Part2 serverThread = new Server_3_77_Part2(block, block.getLeadingZeros(), startNonce, endNonce);
                     serverThreads.add(serverThread);
                     Thread thread = new Thread(serverThread);
                     thread.start();
