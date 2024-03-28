@@ -84,7 +84,7 @@ public class BlockMining_3_77
     }
 
     public static Object getObject(String JsgString) {
-        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, TryTask2.BlockMining_3_77.class);
+        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
     }
 }
 
