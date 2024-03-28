@@ -36,7 +36,11 @@ public class LoadBalancer_3_77 {
 
                 InetAddress clientAddress =  request.getAddress();
                 int clientPort = request.getPort();
+<<<<<<< HEAD
                 BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
+=======
+               BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
+>>>>>>> 33962c1bf4131b3c690f9721e51eaca1d4aabdbf
 
 
                 // Determine which server to forward the request
