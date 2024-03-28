@@ -36,12 +36,8 @@ public class LoadBalancer_3_77 {
 
                 InetAddress clientAddress =  request.getAddress();
                 int clientPort = request.getPort();
-<<<<<<< HEAD
-                BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
-=======
-               BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
->>>>>>> 33962c1bf4131b3c690f9721e51eaca1d4aabdbf
 
+                BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
 
                 // Determine which server to forward the request
                 int serverIndex = (int) (nonceMin + ((range / numServers) * (request.getData()[0] & 0xFF)) / 256); // Distribute evenly
@@ -55,7 +51,7 @@ public class LoadBalancer_3_77 {
                     long startNonce = nonceMax / numServers * i;
                     long endNonce = nonceMin / numServers * (i + 1);
 
-                    Server_3_77_Part2 serverThread = new Server_3_77_Part2(block, block.getLeadingZeros(), startNonce, endNonce);
+                    Server_3_77_Part2 serverThread = new Server_3_77_Part2(block.getLeadingZeros(), startNonce, endNonce);
                     serverThreads.add(serverThread);
                     Thread thread = new Thread(serverThread);
                     thread.start();

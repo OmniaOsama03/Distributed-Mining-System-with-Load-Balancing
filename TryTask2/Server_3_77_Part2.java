@@ -17,18 +17,19 @@ import java.util.HashMap;
 
 class Server_3_77_Part2 implements Runnable {
     private static HashMap<String, InetAddress> connectedClients = new HashMap<>();
-
-    private BlockMining_3_77 block;
     private int leadingZeros;
     private long startNonce;
     private long endNonce;
-    public Server_3_77_Part2(BlockMining_3_77 block, int leadingZeros, long startNonce, long endNonce) {
-        this.block = block;
+
+    //Constructor
+    public Server_3_77_Part2(int leadingZeros, long startNonce, long endNonce) {
         this.leadingZeros = leadingZeros;
         this.startNonce = startNonce;
         this.endNonce = endNonce;
     }
-    public static void main(String[] args) {
+
+    @Override
+    public void run() {
 
         DatagramSocket aSocket = null;
 
@@ -37,7 +38,7 @@ class Server_3_77_Part2 implements Runnable {
             byte[] buffer = new byte[1000];
             System.out.println("Servers are searching for the nonce... ");
 
-            while(true) {
+            while (true) {
 
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 aSocket.receive(request);
@@ -53,6 +54,13 @@ class Server_3_77_Part2 implements Runnable {
 
                 BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
 
+                System.out.println("Mining from nonce " + startNonce + " to nonce " + endNonce + " with " + leadingZeros + " leading zeros");
+
+                // Generate hash for each nonce in the range [startNonce, endNonce]
+                for (long nonce = startNonce; nonce <= endNonce; nonce++) {
+                    block.generateHash(leadingZeros, startNonce, endNonce) ;// Calculate hash for the current nonce
+                }
+
 
                 String blockInfo = "\nBlock Number: " + block.getBlockNumber() +
                         "\nData: " + block.getData() +
@@ -61,7 +69,7 @@ class Server_3_77_Part2 implements Runnable {
                         "\n\n EXECUTION TIME: " + block.getExecutionTime() + " ms";
 
 
-                DatagramPacket reply = new DatagramPacket(blockInfo.getBytes(),blockInfo.length(),request.getAddress(),request.getPort());
+                DatagramPacket reply = new DatagramPacket(blockInfo.getBytes(), blockInfo.length(), request.getAddress(), request.getPort());
                 aSocket.send(reply);
             }
 
@@ -77,16 +85,5 @@ class Server_3_77_Part2 implements Runnable {
         }
     }
 
-
-    @Override
-    public void run() {
-// Mining logic goes here
-        System.out.println("Mining from nonce " + startNonce + " to nonce " + endNonce + " with " + leadingZeros + " leading zeros");
-// Generate hash for each nonce in the range [startNonce, endNonce]
-        for (long nonce = startNonce; nonce <= endNonce; nonce++) {
-            block.generateHash(leadingZeros, startNonce, endNonce) ;// Calculate hash for the current nonce
-        }
-    }
-
-
 }
+
