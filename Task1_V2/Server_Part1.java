@@ -29,7 +29,7 @@ public class Server_Part1 {
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 aSocket.receive(request);
 
-                String clientID = request.getAddress().toString();
+                String clientID = request.getSocketAddress().toString();
 
                 // Checking if the client is a new connection and adding it to the connectedClients HashMap
                 if (!connectedClients.containsKey(clientID)) {

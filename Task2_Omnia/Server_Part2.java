@@ -9,19 +9,21 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 
-public class Server_Part2 extends Thread {
+public class Server_Part2 extends Thread implements Runnable{
 
+    private String currentThread = Thread.currentThread().getName();
     private long startNonce;
     private long endNonce;
     private Block_3_77 block;
     private InetAddress clientAddress;
     private int clientPort;
+    private int serverPort;
+    private boolean continueThread = true;
     DatagramSocket aSocket = null;
-    int serverPort;
-
 
     Server_Part2(long startNonce, long endNonce, Block_3_77 block, int serverPort, InetAddress clientAddress, int clientPort)
     {
+
         this.startNonce = startNonce;
         this.endNonce = endNonce;
         this.block = block;
@@ -30,28 +32,43 @@ public class Server_Part2 extends Thread {
         this.serverPort = serverPort;
     }
 
+    public void setServerPort(int newPort)
+    {
+        this.serverPort = newPort;
+    }
+    public int getServerPort()
+    {
+        return this.serverPort;
+    }
+
     @Override
     public void run() {
+
         try {
             aSocket = new DatagramSocket(serverPort);
             byte[] buffer = new byte[1000];
 
             System.out.println("Server instantiation is up and running ... ");
 
+
             while (true){
-                block.mineBlock(block.getLeadingZeros(), startNonce, endNonce);
+                //System.out.println(currentThread + " with " + startNonce + " and " + endNonce);
 
-            String blockInfo = "\nBlock Number: " + block.getBlockNumber() +
-                    "\nData: " + block.getData() +
-                    "\nNonce: " + block.getNonce() +
-                    "\nHash with " + block.getLeadingZeros() + " leading zeros: " + block.getHash() +
-                    "\n\n EXECUTION TIME: " + block.getExecutionTime() + " ms";
+                    block.mineBlock(block.getLeadingZeros(), startNonce, endNonce);
 
-            if (block.getNonceFound()) { //prevents block from  if nonce not found within range.
-                DatagramPacket reply = new DatagramPacket(blockInfo.getBytes(), blockInfo.length(), clientAddress, clientPort);
-                aSocket.send(reply);
-                break;
-            }
+                    String blockInfo = "\nBlock Number: " + block.getBlockNumber() +
+                            "\nData: " + block.getData() +
+                            "\nNonce: " + block.getNonce() +
+                            "\nHash with " + block.getLeadingZeros() + " leading zeros: " + block.getHash() +
+                            "\n\n EXECUTION TIME: " + block.getExecutionTime() + " ms";
+
+                    if (block.getNonceFound()) { //prevents block from  if nonce not found within range.
+                        DatagramPacket reply = new DatagramPacket(blockInfo.getBytes(), blockInfo.length(), clientAddress, clientPort);
+                        aSocket.send(reply);
+                    }
+
+
+
         }
 
         } catch (SocketException var8) {
