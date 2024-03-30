@@ -1,32 +1,28 @@
-package Task1_V2;
+package Task2_Omnia;
 
 import com.google.gson.GsonBuilder;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-//Maryam Mohammed Ali 1079679
-//Omnia Osama Ahmed 1084505
-//Nourhan Ahmed Elmehalawy 1078096
-public class BlockMining_3_77
-{
+public class Block_3_77 {
     private int blockNumber;
     private long nonce;
     private String data;
     private String hash;
     private int leadingZeros;
     private long executionTime; // Variable for execution time
+    private boolean nonceFound = false;
 
-    public BlockMining_3_77(int blockNumber, String data, int leadingZeros) {
+    public Block_3_77(){}
+    public Block_3_77(int blockNumber, String data, int leadingZeros) {
         this.blockNumber = blockNumber;
         this.data = data;
         this.nonce = 0; // Initial nonce value
         this.hash = "";
         this.leadingZeros = leadingZeros;
-
     }
 
-
+    //Getters-
     public int getBlockNumber() {
         return blockNumber;
     }
@@ -41,6 +37,7 @@ public class BlockMining_3_77
         return hash;
     }
     public long getExecutionTime() {return executionTime;}
+    public boolean getNonceFound(){return nonceFound;}
 
 
     // Generate SHA-256 hash of a string
@@ -66,29 +63,32 @@ public class BlockMining_3_77
     }
 
     // Mine the block to find a hash with a specified number of leading zeros
-    public void generateHash(int leadingZeros) {
-        // Start the timer
-        long startTime = System.nanoTime();
+    public void mineBlock(int leadingZeros, long startNonce, long endNonce) {
+        nonceFound = false; //resetting the value of the variable (more than 1 thread might work on the same block)
 
+        long startTime = System.nanoTime(); // Start the timer
         String prefix = "0".repeat(leadingZeros);
-        do {
-            nonce++; // Increment nonce value
-            String dataWithNonce = blockNumber + data + nonce;
-            hash = calculateHash(dataWithNonce);
-        } while (!hash.startsWith(prefix)); // Continue until hash has the required number of leading zeros
 
+        for (nonce = startNonce; nonce <= endNonce; nonce++) {
+            String dataWithNonce = blockNumber + data + nonce;
+
+            hash = calculateHash(dataWithNonce);
+            if (hash.startsWith(prefix)) {
+                nonceFound = true;
+                break; // Stop iterating if valid hash is found
+            }
+        }
         // Stop the timer
         long endTime = System.nanoTime();
-
-        // Calculate elapsed time in milliseconds and assign it to executionTime
         executionTime = (endTime - startTime) / 1000000;
+    }
+
+    public static Object getObject(String JsgString) {
+        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, Block_3_77.class);
     }
 
     public static String getJson(Object o) {
         return new GsonBuilder().setPrettyPrinting().create().toJson(o);
-    }
-    public static Object getObject(String JsgString) {
-        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
     }
 }
 

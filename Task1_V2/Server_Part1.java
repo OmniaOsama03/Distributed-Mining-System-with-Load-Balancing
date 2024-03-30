@@ -1,7 +1,5 @@
 package Task1_V2;
 
-import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -10,8 +8,9 @@ import java.net.SocketException;
 import java.util.HashMap;
 
 //Maryam Mohammed Ali 1079679
-// Omnia Osama Ahmed 1084505
+//Omnia Osama Ahmed 1084505
 //Nourhan Ahmed Elmehalawy 1078096
+
 public class Server_Part1 {
     // HashMap to store connected clients with their IP addresses and ports
     private static HashMap<String, InetAddress> connectedClients = new HashMap<>();
@@ -39,7 +38,7 @@ public class Server_Part1 {
                 }
 
 
-                BlockMining_3_77 block = (BlockMining_3_77) getObject(new String(request.getData(), 0, request.getLength()));
+                BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
 
                 block.generateHash(block.getLeadingZeros());
 
@@ -66,7 +65,4 @@ public class Server_Part1 {
         }
     }
 
-    public static Object getObject(String JsgString) {
-        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
-    }
 }
