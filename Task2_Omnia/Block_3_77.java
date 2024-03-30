@@ -73,7 +73,7 @@ public class Block_3_77 {
             String dataWithNonce = blockNumber + data + nonce;
 
             hash = calculateHash(dataWithNonce);
-            if (hash.startsWith(prefix)) {
+            if (hash.startsWith(prefix) && hash.charAt(leadingZeros) != '0') {
                 nonceFound = true;
                 break; // Stop iterating if valid hash is found
             }

@@ -1,6 +1,6 @@
 package Task2_V0;
 
-import Task1_V2.BlockMining_3_77;
+import Task1.Block_3_77;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
@@ -27,12 +27,12 @@ public class Client_2_Part2 {
             int leadingZeros = Integer.parseInt(args[3]);
 
             //P.S Since ours applies one block at a time, we could remove the array below and directly use getJson(block)
-            BlockMining_3_77[] Blocks = new BlockMining_3_77[]
+            Block_3_77[] Blocks = new Block_3_77[]
                     {
-                            new BlockMining_3_77(blockNumber, data, leadingZeros)
+                            new Block_3_77(blockNumber, data, leadingZeros)
                     };
 
-            for (BlockMining_3_77 block : Blocks) {
+            for (Block_3_77 block : Blocks) {
 
                 String myBlock = getJson(block);
 

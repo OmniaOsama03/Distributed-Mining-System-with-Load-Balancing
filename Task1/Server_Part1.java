@@ -1,4 +1,4 @@
-package Task1_V2;
+package Task1;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -13,12 +13,11 @@ import java.util.HashMap;
 
 public class Server_Part1 {
     // HashMap to store connected clients with their IP addresses and ports
-    private static HashMap<String, InetAddress> connectedClients = new HashMap<>();
+    private static HashMap<InetAddress, Integer> connectedClients = new HashMap<>();
 
     public static void main(String[] args) {
 
         DatagramSocket aSocket = null;
-
         try {
             aSocket = new DatagramSocket(20000);
             byte[] buffer = new byte[1000];
@@ -29,18 +28,19 @@ public class Server_Part1 {
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 aSocket.receive(request);
 
-                String clientID = request.getSocketAddress().toString();
+                InetAddress clientID = request.getAddress();
 
                 // Checking if the client is a new connection and adding it to the connectedClients HashMap
                 if (!connectedClients.containsKey(clientID)) {
-                    connectedClients.put(clientID, request.getAddress());
+                    connectedClients.put(clientID, request.getPort());
                     System.out.println("connected client: " + clientID);
                 }
 
+                //Deserializing the received block into a Block_3_77 object.
+                Block_3_77 block = (Block_3_77) Block_3_77.getObject(new String(request.getData(), 0, request.getLength()));
 
-                BlockMining_3_77 block = (BlockMining_3_77) BlockMining_3_77.getObject(new String(request.getData(), 0, request.getLength()));
-
-                block.generateHash(block.getLeadingZeros());
+                //Mining the received block.
+                block.mineBlock(block.getLeadingZeros());
 
                 String blockInfo = "\nBlock Number: " + block.getBlockNumber() +
                         "\nData: " + block.getData() +

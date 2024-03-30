@@ -1,23 +1,23 @@
-package Task1_V2;
+package Task1;
 
 import com.google.gson.GsonBuilder;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 //Maryam Mohammed Ali 1079679
 //Omnia Osama Ahmed 1084505
 //Nourhan Ahmed Elmehalawy 1078096
-public class BlockMining_3_77
+
+public class Block_3_77
 {
     private int blockNumber;
     private long nonce;
     private String data;
     private String hash;
     private int leadingZeros;
-    private long executionTime; // Variable for execution time
+    private long executionTime; // Variable for execution time.
 
-    public BlockMining_3_77(int blockNumber, String data, int leadingZeros) {
+    public Block_3_77(int blockNumber, String data, int leadingZeros) {
         this.blockNumber = blockNumber;
         this.data = data;
         this.nonce = 0; // Initial nonce value
@@ -43,7 +43,7 @@ public class BlockMining_3_77
     public long getExecutionTime() {return executionTime;}
 
 
-    // Generate SHA-256 hash of a string
+    // Generating SHA-256 hash of the string.
     private String calculateHash(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -65,22 +65,27 @@ public class BlockMining_3_77
         }
     }
 
-    // Mine the block to find a hash with a specified number of leading zeros
-    public void generateHash(int leadingZeros) {
+    // Mine the block to find a hash with a specified number of leading zeros.
+    public void mineBlock(int leadingZeros) {
         // Start the timer
         long startTime = System.nanoTime();
 
         String prefix = "0".repeat(leadingZeros);
-        do {
+
+        while(true)
+        {
             nonce++; // Increment nonce value
             String dataWithNonce = blockNumber + data + nonce;
             hash = calculateHash(dataWithNonce);
-        } while (!hash.startsWith(prefix)); // Continue until hash has the required number of leading zeros
+
+            if(hash.startsWith(prefix) && hash.charAt(leadingZeros) != '0')
+                break;
+        }
 
         // Stop the timer
         long endTime = System.nanoTime();
 
-        // Calculate elapsed time in milliseconds and assign it to executionTime
+        // Calculate time in milliseconds.
         executionTime = (endTime - startTime) / 1000000;
     }
 
@@ -88,7 +93,7 @@ public class BlockMining_3_77
         return new GsonBuilder().setPrettyPrinting().create().toJson(o);
     }
     public static Object getObject(String JsgString) {
-        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, BlockMining_3_77.class);
+        return new GsonBuilder().setPrettyPrinting().create().fromJson(JsgString, Block_3_77.class);
     }
 }
 
