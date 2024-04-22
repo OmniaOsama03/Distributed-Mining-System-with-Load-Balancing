@@ -1,7 +1,6 @@
-package Task2_Omnia;
+package Task2_Old;
 
 
-import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

@@ -1,4 +1,4 @@
-package Task2_Omnia;
+package Task2_Old;
 
 import com.google.gson.GsonBuilder;
 import java.security.MessageDigest;

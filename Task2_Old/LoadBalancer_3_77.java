@@ -1,4 +1,4 @@
-package Task2_Omnia;
+package Task2_Old;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

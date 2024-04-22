@@ -1,4 +1,4 @@
-package Task2_Omnia_Updated;
+package Task2_Finalised;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -38,6 +38,7 @@ public class Client1_Part2 {
 
             DatagramPacket request = new DatagramPacket(m, myBlock.length(), aHost, serverPort);
             aSocket.send(request);
+            System.out.println("START TIME: " + System.nanoTime()/1000000);
 
             byte[] buffer = new byte[1000];
             DatagramPacket reply = new DatagramPacket(buffer, buffer.length);

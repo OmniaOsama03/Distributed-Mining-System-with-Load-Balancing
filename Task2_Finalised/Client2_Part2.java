@@ -1,4 +1,4 @@
-package Task2_Omnia_Updated;
+package Task2_Finalised;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -43,6 +43,7 @@ public class Client2_Part2
             byte[] buffer = new byte[1000];
             DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
             aSocket.receive(reply);
+            System.out.println("END TIME: " + System.nanoTime()/1000000);
 
             System.out.println("----------------------------------------------------------");
             System.out.println("Reply: " + new String(reply.getData(), 0, reply.getLength()));

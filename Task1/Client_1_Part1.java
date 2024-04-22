@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.Scanner;
 
 //Maryam Mohammed Ali 1079679
 //Omnia Osama Ahmed 1084505
@@ -37,6 +38,7 @@ public class Client_1_Part1 {
 
             DatagramPacket request = new DatagramPacket(m, myBlock.length(), aHost, serverPort);
             aSocket.send(request);
+            System.out.println("START TIME: " + System.nanoTime()/1000000);
 
             byte[] buffer = new byte[1000];
             DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
@@ -46,6 +48,8 @@ public class Client_1_Part1 {
             System.out.println("Reply: " + new String(reply.getData(), 0, reply.getLength()));
             System.out.println("----------------------------------------------------------");
 
+            Scanner lolo = new Scanner(System.in);
+            lolo.nextLine();
 
         } catch (SocketException var14) {
             System.out.println("Error Socket: " + var14.getMessage());

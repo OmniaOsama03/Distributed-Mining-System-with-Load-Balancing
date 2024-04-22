@@ -47,6 +47,7 @@ public class Client_2_Part1 {
             System.out.println("Reply: " + new String(reply.getData(), 0, reply.getLength()));
             System.out.println("----------------------------------------------------------");
 
+            System.out.println("END TIME: " + System.nanoTime()/1000000);
 
         } catch (SocketException var14) {
             System.out.println("Error Socket: " + var14.getMessage());
