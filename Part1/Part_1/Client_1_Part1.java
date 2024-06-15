@@ -6,10 +6,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-
-//Maryam Mohammed Ali 1079679
-//Omnia Osama Ahmed 1084505
-//Nourhan Ahmed Elmehalawy 1078096
 public class Client_1_Part1 {
     public static void main(String[] args) {
 
