@@ -7,9 +7,6 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.HashMap;
 
-//Maryam Mohammed Ali 1079679
-//Omnia Osama Ahmed 1084505
-//Nourhan Ahmed Elmehalawy 1078096
 
 public class Server_Part1 {
     // HashMap to store connected clients with their IP addresses and ports
