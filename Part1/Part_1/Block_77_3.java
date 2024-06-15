@@ -4,9 +4,6 @@ import com.google.gson.GsonBuilder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-//Maryam Mohammed Ali 1079679
-//Omnia Osama Ahmed 1084505
-//Nourhan Ahmed Elmehalawy 1078096
 
 public class Block_3_77
 {
